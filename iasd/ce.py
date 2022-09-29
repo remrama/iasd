@@ -131,8 +131,8 @@ sess = pd.DataFrame.from_dict(session_key, orient="index").rename_axis("session_
 # Convert presentation length to amount of CE credits.
 sess["credits"] = sess["length"].div(60)
 
-# Require a 3 in just 1 or more presentation of each session
-credited = res.groupby("session_id").max().ge(3).astype(float)
+# Require a 1 in just 1 or more presentation of each session
+credited = res.groupby("session_id").max().ge(1).astype(float)
 
 totals = credited.mul(sess["credits"], axis=0).sum(axis=0).rename("n_credits")
 
