@@ -5,7 +5,7 @@ import pandas as pd
 import pyreadstat
 
 parent = Path("~").expanduser() / "Desktop"
-import_name = "IASD+CE+Evaluation+and+Attendance+Survey+2023_July+16,+2023_14.19.sav"
+import_name = "IASD+CE+Evaluation+and+Attendance+Survey+2023_August+12,+2023_14.44.sav"
 import_path = parent / import_name
 export_path = parent / "credits.csv"
 import_path2 = parent / "CE Registration List 6-14-2023.csv"
@@ -14,6 +14,10 @@ df, meta = pyreadstat.read_sav(import_path)
 
 df["ParticipantEmail"] = df["ParticipantEmail"].str.lower()
 df = df[df["ParticipantEmail"].ne("me@you.com")]
+df = df[df["ParticipantEmail"].ne("me@m.com")]
+df["ParticipantEmail"] = df["ParticipantEmail"].replace(
+    {"vergvennett@gmail.com": "vergebennett@gmail.com"}
+)
 
 data = (df
     .astype({"ParticipantEmail": "category", "AttendanceCode": "category"})
